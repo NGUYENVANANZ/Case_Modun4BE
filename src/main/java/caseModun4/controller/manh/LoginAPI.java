@@ -5,7 +5,6 @@ package caseModun4.controller.manh;
 import caseModun4.model.Account;
 import caseModun4.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,5 +35,10 @@ public class LoginAPI {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
     }
 
+
   }
-}
+
+
+
+
+  }
