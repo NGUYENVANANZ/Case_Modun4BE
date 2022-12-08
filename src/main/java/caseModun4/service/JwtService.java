@@ -30,10 +30,9 @@ public class JwtService {
 
     // lấy username từ token
     public String getUserNameFromJwtToken(String token) {
-        String userName = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
-        return userName;
     }
 }
