@@ -1,4 +1,4 @@
-package caseModun4.repository.manh;
+package caseModun4.repository;
 
 
 import caseModun4.model.Account;
