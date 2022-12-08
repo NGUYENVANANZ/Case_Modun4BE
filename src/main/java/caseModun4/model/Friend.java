@@ -16,5 +16,8 @@ public class Friend {
     private Account account;
 
     @ManyToOne
+    private Account account1;
+
+    @ManyToOne
     private FriendStatus friendStatus;
 }
