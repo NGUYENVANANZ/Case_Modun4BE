@@ -3,18 +3,21 @@ package caseModun4.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
-public class Friend {
+public class LikeCmt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private Account account;
+    private LikeType likeType;
 
     @ManyToOne
-    private FriendStatus friendStatus;
+    private Account accounts;
+
+    @ManyToOne
+    private Cmt cmt;
+
 }
