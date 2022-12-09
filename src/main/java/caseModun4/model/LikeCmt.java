@@ -12,9 +12,6 @@ public class LikeCmt {
     private long id;
 
     @ManyToOne
-    private LikeType likeType;
-
-    @ManyToOne
     private Account accounts;
 
 
