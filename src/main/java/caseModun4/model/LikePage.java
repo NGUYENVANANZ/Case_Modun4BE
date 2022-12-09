@@ -11,12 +11,7 @@ public class LikePage {
     private long id;
 
     @ManyToOne
-    private LikeType likeType;
-
-    @ManyToOne
     private Account accounts;
 
-    @ManyToOne
-    private Page page;
 
 }

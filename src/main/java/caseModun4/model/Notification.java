@@ -11,7 +11,9 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String notification;
+    private long id_account;
+
+    private long id_page;
 
     @ManyToOne
     private NotificationType notificationType;
