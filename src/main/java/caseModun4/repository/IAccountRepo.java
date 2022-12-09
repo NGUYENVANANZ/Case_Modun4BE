@@ -18,4 +18,6 @@ public interface IAccountRepo extends CrudRepository<Account, Long> {
     String profile(@Param("username") String username);
 
     Account findByUsername(String username);
+
+    Account findAccountById(long id);
 }

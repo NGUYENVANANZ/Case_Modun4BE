@@ -17,6 +17,6 @@ public class Cmt {
     @ManyToOne
     private Account accounts;
 
-    @ManyToOne
-    private Page page;
+    @ManyToMany
+    private List<LikeCmt> likeCmts;
 }

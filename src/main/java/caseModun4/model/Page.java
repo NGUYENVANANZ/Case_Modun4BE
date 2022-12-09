@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +19,13 @@ public class Page {
 
     @ManyToOne
     private Account account;
+
+    @ManyToOne
+    private PageStatus pageStatus;
+
+    @ManyToMany
+    private List<Cmt> cmts;
+
+    @ManyToMany
+    private List<LikePage> likePages;
 }
