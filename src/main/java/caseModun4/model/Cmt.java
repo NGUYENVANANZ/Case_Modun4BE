@@ -17,6 +17,6 @@ public class Cmt {
     @ManyToOne
     private Account accounts;
 
-    @OneToMany
+    @ManyToMany
     private List<LikeCmt> likeCmts;
 }

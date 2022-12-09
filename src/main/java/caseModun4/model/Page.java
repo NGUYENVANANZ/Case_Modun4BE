@@ -23,9 +23,9 @@ public class Page {
     @ManyToOne
     private PageStatus pageStatus;
 
-    @OneToMany
+    @ManyToMany
     private List<Cmt> cmts;
 
-    @OneToMany
+    @ManyToMany
     private List<LikePage> likePages;
 }
