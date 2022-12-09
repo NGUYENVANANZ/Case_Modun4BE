@@ -16,5 +16,6 @@ public interface IAccountRepo extends CrudRepository<Account, Long> {
 
     @Query(nativeQuery = true,value = "SELECT * from account where username = :username")
     String profile(@Param("username") String username);
+
     Account findByUsername(String username);
 }

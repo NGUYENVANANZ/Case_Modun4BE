@@ -18,8 +18,8 @@ public class ProfileService {
   IAccountRepo iAccountRepo;
 
 
-  public String accounts (String username){
-    return iAccountRepo.profile(username);
+  public Account findaccountsbyname (String username){
+    return iAccountRepo.findByUsername(username);
   }
 
 

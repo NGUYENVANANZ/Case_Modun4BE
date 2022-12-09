@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/profiles")
 public class ProfileAPI {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -29,15 +30,10 @@ public class ProfileAPI {
   ProfileService profileService;
 
   @GetMapping("/profile")
-  public  ResponseEntity<Account>  findById() {
+  public  ResponseEntity<Account> findById() {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    Account account = iAccountRepo.findByUsername(userDetails.getUsername());
-
-    return new ResponseEntity<>(account,HttpStatus.ACCEPTED);
+    Account account = profileService.findaccountsbyname(userDetails.getUsername());
+    return new ResponseEntity<>(account ,HttpStatus.OK);
   }
-
-
-
-
 
 }

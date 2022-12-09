@@ -29,4 +29,9 @@ public class AccountService implements UserDetailsService {
         }
         return null;
     }
+
+    public Account findByName(String name){
+        return  iAccountRepo.findByUsername(name);
+    }
+
 }
