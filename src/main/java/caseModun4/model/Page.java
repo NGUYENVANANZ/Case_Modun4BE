@@ -20,6 +20,9 @@ public class Page {
     @ManyToOne
     private Account account;
 
+    @ManyToOne
+    private PageStatus pageStatus;
+
     @OneToMany
     private List<Cmt> cmts;
 
