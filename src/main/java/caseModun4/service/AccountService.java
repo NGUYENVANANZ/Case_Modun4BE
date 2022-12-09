@@ -25,7 +25,7 @@ public class AccountService implements UserDetailsService {
         List<Role>  roles=  new ArrayList<>();
         roles.add(account.getRoles());
         if (account != null) {
-            return new User(account.getUsername(), account.getPassword(), roles );
+            return new User(account.getUsername(), account.getPassword(), roles);
         }
         return null;
     }
