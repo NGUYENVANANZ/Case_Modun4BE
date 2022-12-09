@@ -1,25 +1,30 @@
 package caseModun4.controller.linh;
 
 import caseModun4.model.Account;
-import caseModun4.service.AccountService;
+import caseModun4.service.linh.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/index")
 @CrossOrigin("*")
 public class SearchAPI {
 
     @Autowired
-    AccountService accountService;
+    IAccountServiceSearch iAccountServiceSearch;
     @GetMapping
-    public Account getAll(@RequestParam String name){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = accountService.findByName(userDetails.getUsername());
-        return account;
+    public ResponseEntity<List<Account>> getAll(){
+        return new ResponseEntity<>(iAccountServiceSearch.getAll(), HttpStatus.OK);
+    }
+
+@GetMapping("/{name}")
+public ResponseEntity<List<Account>> findByName(@RequestBody String name){
+    return new ResponseEntity<>(iAccountServiceSearch.findByName(name), HttpStatus.OK);
+
     }
 }
+

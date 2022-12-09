@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAccountRepo extends CrudRepository<Account, Long> {
+    @Query(nativeQuery = true, value = "SELECT * FROM account WHERE username LIKE concat('%',:username,'%')")
+
     Account findByUsername(String username);
 }

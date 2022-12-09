@@ -35,7 +35,6 @@ public class LoginAPI {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
     }
 
-
   }
 
 
