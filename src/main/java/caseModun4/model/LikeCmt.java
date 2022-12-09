@@ -17,7 +17,5 @@ public class LikeCmt {
     @ManyToOne
     private Account accounts;
 
-    @ManyToOne
-    private Cmt cmt;
 
 }
