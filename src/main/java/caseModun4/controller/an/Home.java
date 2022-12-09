@@ -1,8 +1,6 @@
 package caseModun4.controller.an;
 
-import caseModun4.model.Account;
-import caseModun4.model.Friend;
-import caseModun4.model.Page;
+import caseModun4.model.*;
 import caseModun4.service.AccountService;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
@@ -53,6 +51,21 @@ public class Home {
         return new ResponseEntity<>(accounts,HttpStatus.OK);
     }
 
+    @GetMapping("/pageStatus")
+    public ResponseEntity<List<PageStatus>> pageStatus(){
+        return new ResponseEntity<>(anService.statuses(),HttpStatus.OK);
+    }
+
+    @GetMapping("/notifications")
+    public ResponseEntity<List<Notification>> Notification(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ResponseEntity<>(anService.notifications(userDetails.getUsername()),HttpStatus.OK);
+    }
+
+    @GetMapping("/account/{id}")
+    public ResponseEntity<Account> account(@PathVariable long id){
+        return new ResponseEntity<>(anService.account(id),HttpStatus.OK);
+    }
 
 
 
