@@ -62,8 +62,6 @@ public class AnService {
         return pages;
     }
 
-<<<<<<< HEAD
-=======
     public List<PageStatus> statuses() {
         return (List<PageStatus>) iPageStatus.findAll();
     }
@@ -74,7 +72,6 @@ public class AnService {
 
     }
 
->>>>>>> 45e156dd523b0974d770f84fe49002ec4ae04998
 }
 
 
