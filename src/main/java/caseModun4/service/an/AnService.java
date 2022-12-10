@@ -1,11 +1,11 @@
 package caseModun4.service.an;
 
-import caseModun4.model.Account;
-import caseModun4.model.Friend;
-import caseModun4.model.Page;
+import caseModun4.model.*;
 import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.an.IFriend;
+import caseModun4.repository.an.INotification;
 import caseModun4.repository.an.IPage;
+import caseModun4.repository.an.IPageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,21 @@ public class AnService {
     @Autowired
     IFriend iFriend;
 
+    @Autowired
+    IPageStatus iPageStatus;
+
+    @Autowired
+    INotification iNotification;
+
 
     public Account account(String username) {
         return iAccountRepo.findByUsername(username);
     }
+
+    public Account account(long id) {
+        return iAccountRepo.findAccountById(id);
+    }
+
 
     public List<Account> friends(String username) {
         Account account = iAccountRepo.findByUsername(username);
@@ -51,4 +62,19 @@ public class AnService {
         return pages;
     }
 
+<<<<<<< HEAD
+=======
+    public List<PageStatus> statuses() {
+        return (List<PageStatus>) iPageStatus.findAll();
+    }
+
+    public List<Notification> notifications(String username) {
+        Account account = iAccountRepo.findByUsername(username);
+        return iNotification.listNotification(account.getId());
+
+    }
+
+>>>>>>> 45e156dd523b0974d770f84fe49002ec4ae04998
 }
+
+
