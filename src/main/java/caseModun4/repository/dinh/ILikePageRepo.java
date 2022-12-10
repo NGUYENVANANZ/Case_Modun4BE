@@ -10,7 +10,5 @@ public interface ILikePageRepo extends CrudRepository<LikePage, Long> {
     @Query(nativeQuery = true,value = "SELECT * from like_page where accounts_id = :id")
     LikePage likePage(@Param("id") long id);
 
-    @Query(nativeQuery = true,value = "DELETE * from like_page where id = :id")
-    Page Page2(@Param("id") long id);
 }
 
