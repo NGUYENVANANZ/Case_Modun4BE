@@ -72,6 +72,55 @@ public class AnService {
 
     }
 
+    public Notification notifications(long id1, long id2, long id3) {
+        List<Notification> notifications = iNotification.Notification(id1, id2);
+
+        for (Notification n : notifications
+        ) {
+            if (n.getPage().getId() == id3) {
+                return n;
+            }
+        }
+        return null;
+    }
+
+    public Notification notificationAddFriend(long id1, long id2, long id3) {
+        List<Notification> notifications = iNotification.Notification(id1, id2);
+
+        for (Notification n : notifications
+        ) {
+            if (n.getNotificationType().getId() == id3) {
+                return n;
+            }
+        }
+        return null;
+    }
+
+    public void addFriend(Account account, Account friend) {
+        FriendStatus friendStatus = new FriendStatus(2, "NotFriend");
+        Friend friends = new Friend(account, friend, friendStatus);
+        iFriend.save(friends);
+    }
+
+    public void newFriend(Account account, Account friend) {
+        FriendStatus friendStatus = new FriendStatus(1, "Friend");
+        Friend friends = iFriend.Friend(account.getId(), friend.getId());
+        friends.setFriendStatus(friendStatus);
+        iFriend.save(friends);
+
+        Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
+        friend1.setFriendStatus(friendStatus);
+        iFriend.save(friend1);
+    }
+
+    public void unFriend(Account account, Account friend) {
+        Friend friends = iFriend.Friend(account.getId(), friend.getId());
+        iFriend.delete(friends);
+
+        Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
+        iFriend.delete(friend1);
+    }
+
 }
 
 

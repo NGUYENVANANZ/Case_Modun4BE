@@ -13,4 +13,11 @@ public class FriendStatus {
 
     private String status;
 
+    public FriendStatus() {
+    }
+
+    public FriendStatus(long id, String status) {
+        this.id = id;
+        this.status = status;
+    }
 }

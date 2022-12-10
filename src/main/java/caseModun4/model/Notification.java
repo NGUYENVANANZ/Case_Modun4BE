@@ -22,4 +22,21 @@ public class Notification {
 
     @ManyToOne
     private Account account;
+
+    public Notification(Account account,Account account1 , NotificationType notificationType) {
+        this.account1 = account1;
+        this.notificationType = notificationType;
+        this.account = account;
+    }
+
+    public Notification(Account account, Account account1, Page page, NotificationType notificationType) {
+        this.account1 = account1;
+        this.page = page;
+        this.notificationType = notificationType;
+        this.account = account;
+    }
+
+    public Notification() {
+
+    }
 }
