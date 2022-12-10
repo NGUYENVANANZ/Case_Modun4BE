@@ -16,8 +16,16 @@ public interface IPage extends CrudRepository<Page, Long> {
     @Query(nativeQuery = true,value = "SELECT * from page where account_id = :id and (page_status_id = 1 or page_status_id = 2)")
     List<Page> Page(@Param("id") long id);
 
+<<<<<<< HEAD
     @Query(nativeQuery = true,value = "SELECT * from page where id = :id")
     Page Page1(@Param("id") long id);
 
+=======
+
+    @Query(nativeQuery = true,value = "SELECT * from page where id = :id")
+    Page Page1(@Param("id") long id);
+
+
+>>>>>>> 5b9faf81485697a304ca13a6364d5dc2730d903d
 
 }
