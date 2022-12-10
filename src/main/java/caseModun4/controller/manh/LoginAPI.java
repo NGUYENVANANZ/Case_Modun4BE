@@ -3,6 +3,7 @@ package caseModun4.controller.manh;
 
 
 import caseModun4.model.Account;
+import caseModun4.repository.IAccountRepo;
 import caseModun4.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 public class LoginAPI {
@@ -22,6 +25,12 @@ public class LoginAPI {
   @Autowired
   JwtService jwtService;
 
+  @Autowired
+  IAccountRepo iAccountRepo;
+  @GetMapping("/getallaccount")
+  public List<Account> getAccount(){
+    return (List<Account>) iAccountRepo.findAll();
+  }
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody Account account){
     try {
@@ -34,11 +43,7 @@ public class LoginAPI {
     }catch (Exception e){
       return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
     }
-
-
   }
-
-
 
 
   }
