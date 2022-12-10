@@ -22,7 +22,7 @@ public class AccountService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = iAccountRepo.findByUsername(username);
-        List<Role>  roles=  new ArrayList<>();
+        List<Role> roles = new ArrayList<>();
         roles.add(account.getRoles());
         if (account != null) {
             return new User(account.getUsername(), account.getPassword(), roles);
@@ -30,8 +30,13 @@ public class AccountService implements UserDetailsService {
         return null;
     }
 
-    public Account findByName(String name){
-        return  iAccountRepo.findByUsername(name);
+
+    public List<Account> getAll() {
+        return (List<Account>) iAccountRepo.findAll();
+    }
+
+    public Account findByName(String name) {
+        return iAccountRepo.findByUsername(name);
     }
 
 }

@@ -10,6 +10,7 @@ public class LikePage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
     @ManyToOne
     private Account accounts;
 
