@@ -38,4 +38,13 @@ public class RegisterApi {
   }
 
 
+  @GetMapping("/checkUsername")
+  public ResponseEntity<Account> checkUser(@RequestParam String userName) {
+    Account account = accountService.findByName(userName);
+    if (account==null){
+      return new ResponseEntity<>(account,HttpStatus.OK);
+    }else {
+      return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
+    }
+  }
 }
