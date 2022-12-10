@@ -18,7 +18,7 @@ public class LikeCmtAPI {
     @Autowired
     ILikeCmtService iLikeCmtService;
 
-    @PostMapping("/Cmt/{id}")
+    @PostMapping("/Cmt")
     public ResponseEntity<LikeCmt> likePage(@RequestBody LikeCmt likeCmt){
         iLikeCmtService.save(likeCmt);
         return new ResponseEntity<>(likeCmt, HttpStatus.OK);
