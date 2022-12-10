@@ -10,21 +10,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/search")
 @CrossOrigin("*")
 public class SearchAPI {
 
     @Autowired
     IAccountServiceSearch iAccountServiceSearch;
-    @GetMapping
-    public ResponseEntity<List<Account>> getAll(){
-        return new ResponseEntity<>(iAccountServiceSearch.getAll(), HttpStatus.OK);
-    }
 
-@GetMapping("/{name}")
-public ResponseEntity<List<Account>> findByName(@RequestBody String name){
-    return new ResponseEntity<>(iAccountServiceSearch.findByName(name), HttpStatus.OK);
-
+    @GetMapping("/{name}")
+    public ResponseEntity<List<Account>> findByName(@PathVariable String name) {
+        return new ResponseEntity<>(iAccountServiceSearch.findByName(name), HttpStatus.OK);
     }
+//    @GetMapping("")
+//    public ResponseEntity<List<Account>> getAll() {
+//        return new ResponseEntity<>(iAccountServiceSearch.getAll(), HttpStatus.OK);
+//    }
+
+
+
 }
 
