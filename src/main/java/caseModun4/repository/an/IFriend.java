@@ -13,4 +13,8 @@ import java.util.List;
 public interface IFriend extends CrudRepository<Friend, Long> {
     @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id")
     List<Friend> listFriend(@Param("id") long id);
+
+    @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id and account1_id = :id1")
+    Friend Friend(@Param("id") long id, @Param("id1") long id1);
+
 }

@@ -2,6 +2,7 @@ package caseModun4.controller.manh;
 
 import caseModun4.model.Account;
 import caseModun4.model.Friend;
+import caseModun4.model.Page;
 import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.manh.IFriendRepo;
 import caseModun4.service.AccountService;
@@ -42,6 +43,14 @@ public class ProfileAPI {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Account account = profileService.findaccountsbyname(userDetails.getUsername());
     return new ResponseEntity<>(account ,HttpStatus.OK);
+  }
+
+  @GetMapping("/pageProfile")
+  public  ResponseEntity<List<Page>> postProfile() {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Account account = profileService.findaccountsbyname(userDetails.getUsername());
+    List<Page> page = profileService.pageList(account.getId());
+    return new ResponseEntity<>(page ,HttpStatus.OK);
   }
 
 }

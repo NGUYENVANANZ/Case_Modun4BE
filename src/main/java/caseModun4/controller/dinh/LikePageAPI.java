@@ -1,9 +1,8 @@
 package caseModun4.controller.dinh;
 
-import caseModun4.model.Account;
-import caseModun4.model.LikePage;
-import caseModun4.model.Page;
+import caseModun4.model.*;
 import caseModun4.model.dto.PostDTO;
+import caseModun4.repository.an.INotification;
 import caseModun4.repository.an.IPage;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
@@ -32,6 +31,9 @@ public class LikePageAPI {
     AnService anService;
 
     @Autowired
+    INotification iNotification;
+
+    @Autowired
     LikePageService likePageService;
 
     @Autowired
@@ -45,18 +47,27 @@ public class LikePageAPI {
         LikePage likePage = likePageService.likePage(account.getId());
 
         Page page = likePageService.newLike(id_page);
-
+        NotificationType notificationType = new NotificationType(2, "Like");
 
         for (int i = 0; i < page.getLikePages().size(); i++) {
             if (likePage == page.getLikePages().get(i)) {
                 PostDTO postDTO = new PostDTO(page, false);
                 page.getLikePages().remove(i);
                 iPage.save(page);
+                if (!account.getUsername().equals(page.getAccount().getUsername())){
+                    Notification notification = anService.notifications(page.getAccount().getId(), account.getId(), page.getId());
+                    iNotification.delete(notification);
+                }
                 return new ResponseEntity<>(postDTO, HttpStatus.OK);
             }
         }
         PostDTO postDTO = new PostDTO(page, true);
         page.getLikePages().add(likePage);
+        if (!account.getUsername().equals(page.getAccount().getUsername())){
+            Notification notification =new Notification(page.getAccount(), account, page, notificationType);
+            iNotification.save(notification);
+        }
+
         iPage.save(page);
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }

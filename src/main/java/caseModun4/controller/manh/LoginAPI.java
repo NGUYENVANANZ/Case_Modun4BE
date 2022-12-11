@@ -27,12 +27,14 @@ public class LoginAPI {
 
   @Autowired
   IAccountRepo iAccountRepo;
+
   @GetMapping("/getallaccount")
-  public List<Account> getAccount(){
+  public List<Account> getAccount() {
     return (List<Account>) iAccountRepo.findAll();
   }
+
   @PostMapping("/login")
-  public ResponseEntity<String> login(@RequestBody Account account){
+  public ResponseEntity<String> login(@RequestBody Account account) {
     try {
       Authentication authentication = authenticationManager.authenticate(
               new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
@@ -40,10 +42,8 @@ public class LoginAPI {
 
       String token = jwtService.createToken(authentication);
       return new ResponseEntity<>(token, HttpStatus.OK);
-    }catch (Exception e){
+    } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
     }
   }
-
-
-  }
+}
