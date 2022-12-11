@@ -26,6 +26,16 @@ public class ProfileUserService implements IProfileService {
         return null;
     }
 
+    @Override
+    public Account findById(long id) {
+        return iProfileUserRepo.findById(id).get();
+    }
+
+    @Override
+    public void save(Account account) {
+        iProfileUserRepo.save(account);
+    }
+
     public List<Page> pageList(long id){
         return iPage.Page3(id);
     }
