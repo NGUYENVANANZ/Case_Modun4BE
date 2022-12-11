@@ -43,5 +43,4 @@ public class ProfileAPI {
     Account account = profileService.findaccountsbyname(userDetails.getUsername());
     return new ResponseEntity<>(account ,HttpStatus.OK);
   }
-
 }
