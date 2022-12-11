@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-public class EditUser {
+public class EditUserAPI {
     @Autowired
     IProfileService iProfileService;
 
