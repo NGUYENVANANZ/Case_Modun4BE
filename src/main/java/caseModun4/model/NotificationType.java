@@ -16,4 +16,11 @@ public class NotificationType {
 
     private String notificationType;
 
+    public NotificationType() {
+    }
+
+    public NotificationType(long id, String notificationType) {
+        this.id = id;
+        this.notificationType = notificationType;
+    }
 }

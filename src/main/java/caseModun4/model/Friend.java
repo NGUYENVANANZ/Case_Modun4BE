@@ -20,4 +20,13 @@ public class Friend {
 
     @ManyToOne
     private FriendStatus friendStatus;
+
+    public Friend() {
+    }
+
+    public Friend(Account account, Account account1, FriendStatus friendStatus) {
+        this.account = account;
+        this.account1 = account1;
+        this.friendStatus = friendStatus;
+    }
 }

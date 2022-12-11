@@ -1,6 +1,7 @@
 package caseModun4.controller.an;
 
 import caseModun4.model.*;
+import caseModun4.repository.an.IFriend;
 import caseModun4.service.AccountService;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
@@ -8,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,9 @@ public class Home {
     @Autowired
     AnService anService;
 
+    @Autowired
+    IFriend iFriend;
+
     @PostMapping("/home")
     public ResponseEntity<Account> home(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -41,6 +45,7 @@ public class Home {
     public ResponseEntity<List<Page>> pageHome(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Page> pages = anService.homePage(userDetails.getUsername());
+
         return new ResponseEntity<>(pages,HttpStatus.OK);
     }
 
@@ -59,12 +64,31 @@ public class Home {
     @GetMapping("/notifications")
     public ResponseEntity<List<Notification>> Notification(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(anService.notifications(userDetails.getUsername()),HttpStatus.OK);
+        List<Notification> notifications = anService.notifications(userDetails.getUsername());
+        notifications.sort(Comparator.comparing(Notification::getId));
+        Collections.reverse(notifications);
+        return new ResponseEntity<>( notifications,HttpStatus.OK);
     }
 
     @GetMapping("/account/{id}")
     public ResponseEntity<Account> account(@PathVariable long id){
         return new ResponseEntity<>(anService.account(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/checkFriends/{idFriend}")
+    public ResponseEntity<FriendStatus> checkFriend(@PathVariable long idFriend){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account accounts = anService.account(userDetails.getUsername());
+        List<Friend> friends = iFriend.listFriend(accounts.getId());
+        for (Friend f:friends
+             ) {
+            if (f.getAccount1().getId() == idFriend){
+                FriendStatus friendStatus = f.getFriendStatus();
+                return new ResponseEntity<>(friendStatus,HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
+
     }
 
 
