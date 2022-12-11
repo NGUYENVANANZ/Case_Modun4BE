@@ -74,6 +74,8 @@ public class ProfileUserAPI {
         iNotification.delete(notification);
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
+
+
     @PostMapping("/unFriend/{idFriend}")
     public ResponseEntity<String> UnFriend(@PathVariable long idFriend) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

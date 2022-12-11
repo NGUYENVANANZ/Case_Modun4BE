@@ -30,7 +30,7 @@ public class RegisterApi {
   @PostMapping("/register")
   public ResponseEntity<Account> register(@RequestBody Account account){
     Role role = new Role();
-    role.setName("ROLE_ADMIN");
+    role.setName("ROLE_USER");
     role.setId(1);
     account.setRoles(role);
     iAccountRepo.save(account);
