@@ -13,10 +13,6 @@ public interface IPage extends CrudRepository<Page, Long> {
     @Query(nativeQuery = true,value = "SELECT * from page where account_id = :id and (page_status_id = 1 or page_status_id = 2)")
     List<Page> Page(@Param("id") long id);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ddfab1c74be562f03712f12dc473d373dd66f52d
     @Query(nativeQuery = true,value = "SELECT * from page where id = :id")
     Page Page1(@Param("id") long id);
 
@@ -24,12 +20,4 @@ public interface IPage extends CrudRepository<Page, Long> {
     List<Page> Page2(@Param("id") long id);
     @Query(nativeQuery = true,value = "SELECT * from page where account_id = :id and page_status_id = 1")
     List<Page> Page3(@Param("id") long id);
-
-
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> ddfab1c74be562f03712f12dc473d373dd66f52d
 }

@@ -72,7 +72,6 @@ public class AnService {
 
     }
 
-<<<<<<< HEAD
     public Notification notifications(long id1, long id2, long id3) {
         List<Notification> notifications = iNotification.Notification(id1, id2);
 
@@ -121,9 +120,6 @@ public class AnService {
         Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
         iFriend.delete(friend1);
     }
-
-=======
->>>>>>> ddfab1c74be562f03712f12dc473d373dd66f52d
 }
 
 
