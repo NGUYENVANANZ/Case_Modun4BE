@@ -49,8 +49,10 @@ public class ProfileUserAPI {
 
     @GetMapping("/friends/{id}")
     public ResponseEntity<List<Account>> friendUser(@PathVariable long id) {
-        Account account = anService.account(id);
-        List<Account> accounts = anService.friends(account.getUsername());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = anService.account(userDetails.getUsername());
+        Account account1 = anService.account(id);
+        List<Account> accounts = anService.friends(account.getId(), account1.getId());
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
