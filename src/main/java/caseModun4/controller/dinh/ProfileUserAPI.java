@@ -60,32 +60,47 @@ public class ProfileUserAPI {
         NotificationType notificationType = new NotificationType(3, "AddFriend");
         Notification notification = new Notification(account1, account, notificationType);
         iNotification.save(notification);
-        return new ResponseEntity<>("ok",HttpStatus.OK);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
-    @PostMapping("/newFriend/{idFriend}")
-    public ResponseEntity<String> newFriend(@PathVariable long idFriend) {
+    @PostMapping("/newFriend/{idFriend}&{idNotification}")
+    public ResponseEntity newFriend(@PathVariable long idFriend,@PathVariable long idNotification) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
         anService.newFriend(account, account1);
-        NotificationType notificationType = new NotificationType(3, "AddFriend");
-        Notification notification = anService.notificationAddFriend(account1.getId(), account.getId(), notificationType.getId());
+        Notification notification = iNotification.findById(idNotification).get();
         iNotification.delete(notification);
-        return new ResponseEntity<>("ok",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @PostMapping("/unFriend/{idFriend}")
-    public ResponseEntity<String> UnFriend(@PathVariable long idFriend) {
+    @PostMapping("/unFriend/{idFriend}&{idNotification}")
+    public ResponseEntity<Notification> UnFriend(@PathVariable long idFriend, @PathVariable long idNotification) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
         anService.unFriend(account, account1);
-        NotificationType notificationType = new NotificationType(3, "AddFriend");
-        Notification notification = anService.notificationAddFriend(account1.getId(), account.getId(), notificationType.getId());
+        Notification notification = iNotification.findById(idNotification).get();
         iNotification.delete(notification);
-        return new ResponseEntity<>("ok",HttpStatus.OK);
+        return new ResponseEntity<>(notification, HttpStatus.OK);
+    }
+
+    @PostMapping("/unFriends/{idFriend}")
+    public ResponseEntity<String> UnFriends(@PathVariable long idFriend) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = anService.account(userDetails.getUsername());
+        Account account1 = anService.account(idFriend);
+//        anService.unFriend(account, account1);
+//  Notification notification = anService.notificationAddFriend(account1.getId(), account.getId(), 3);
+        List<Notification> notification = iNotification.Notification(account1.getId(), account.getId());
+        for (Notification n:notification
+             ) {
+            if (n.getNotificationType().getId() == 3){
+                iNotification.delete(n);
+            }
+        }
+        return new ResponseEntity<>("ok" ,HttpStatus.OK);
     }
 
 
