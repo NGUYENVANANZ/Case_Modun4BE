@@ -25,8 +25,4 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Role roles;
-
-
-
-
 }
