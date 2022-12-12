@@ -73,11 +73,11 @@ public class AnService {
     }
 
     public Notification notifications(long id1, long id2, long id3) {
-        List<Notification> notifications = iNotification.Notification(id1, id2);
+        List<Notification> notifications = iNotification.listNotification(id1);
 
         for (Notification n : notifications
         ) {
-            if (n.getPage().getId() == id3) {
+            if (n.getAccount1().getId() == id2 && n.getPage().getId() == id3) {
                 return n;
             }
         }
@@ -86,14 +86,13 @@ public class AnService {
 
     public Notification notificationAddFriend(long id1, long id2, long id3) {
         List<Notification> notifications = iNotification.Notification(id1, id2);
-
-        for (Notification n : notifications
-        ) {
+        Notification notification = null;
+        for (Notification n : notifications) {
             if (n.getNotificationType().getId() == id3) {
-                return n;
+                notification = n;
             }
         }
-        return null;
+        return notification;
     }
 
     public void addFriend(Account account, Account friend) {
@@ -120,6 +119,11 @@ public class AnService {
         Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
         iFriend.delete(friend1);
     }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> dee2fdc62a73ac03298278cd7f10deb661798ba3
 }
 
 
