@@ -7,7 +7,6 @@ import caseModun4.repository.an.INotification;
 import caseModun4.repository.an.IPage;
 import caseModun4.repository.an.IPageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -120,11 +119,7 @@ public class AnService {
         Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
         iFriend.delete(friend1);
     }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> dee2fdc62a73ac03298278cd7f10deb661798ba3
 }
 
 
