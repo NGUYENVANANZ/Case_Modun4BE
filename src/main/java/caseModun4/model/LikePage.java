@@ -9,10 +9,13 @@ public class LikePage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-
     @ManyToOne
     private Account accounts;
 
+    public LikePage() {
+    }
 
+    public LikePage(Account accounts) {
+        this.accounts = accounts;
+    }
 }

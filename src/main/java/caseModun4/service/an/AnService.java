@@ -7,7 +7,6 @@ import caseModun4.repository.an.INotification;
 import caseModun4.repository.an.IPage;
 import caseModun4.repository.an.IPageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -95,10 +94,10 @@ public class AnService {
         return notification;
     }
 
-    public void addFriend(Account account, Account friend) {
+    public Friend addFriend(Account account, Account friend) {
         FriendStatus friendStatus = new FriendStatus(2, "NotFriend");
         Friend friends = new Friend(account, friend, friendStatus);
-        iFriend.save(friends);
+        return friends;
     }
 
     public void newFriend(Account account, Account friend) {
@@ -114,10 +113,10 @@ public class AnService {
 
     public void unFriend(Account account, Account friend) {
         Friend friends = iFriend.Friend(account.getId(), friend.getId());
-        iFriend.delete(friends);
+        iFriend.deleteById(friends.getId());
 
         Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
-        iFriend.delete(friend1);
+        iFriend.deleteById(friend1.getId());
     }
 
 }

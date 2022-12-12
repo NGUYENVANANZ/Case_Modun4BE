@@ -1,6 +1,7 @@
 package caseModun4.controller.an;
 
 import caseModun4.model.*;
+import caseModun4.model.dto.FriendDTO;
 import caseModun4.repository.an.IFriend;
 import caseModun4.service.AccountService;
 import caseModun4.service.JwtService;
@@ -75,18 +76,21 @@ public class Home {
     }
 
     @GetMapping("/checkFriends/{idFriend}")
-    public ResponseEntity<FriendStatus> checkFriend(@PathVariable long idFriend){
+    public ResponseEntity<FriendDTO> checkFriend(@PathVariable long idFriend){
+        FriendDTO friendDTO = new FriendDTO();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account accounts = anService.account(userDetails.getUsername());
         List<Friend> friends = iFriend.listFriend(accounts.getId());
+
         for (Friend f:friends
              ) {
             if (f.getAccount1().getId() == idFriend){
                 FriendStatus friendStatus = f.getFriendStatus();
-                return new ResponseEntity<>(friendStatus,HttpStatus.OK);
+                friendDTO.setIdFriend(f.getAccount1().getId());
+                friendDTO.setFriendStatus(friendStatus);
             }
         }
-        return new ResponseEntity<>(null,HttpStatus.OK);
+        return new ResponseEntity<>(friendDTO,HttpStatus.OK);
 
     }
 
