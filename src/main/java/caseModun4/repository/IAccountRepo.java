@@ -2,6 +2,7 @@ package caseModun4.repository;
 
 
 import caseModun4.model.Account;
+import caseModun4.model.Friend;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,7 +21,8 @@ public interface IAccountRepo extends CrudRepository<Account, Long> {
     @Query(nativeQuery = true,value = "SELECT * from account where username = :username")
     String profile(@Param("username") String username);
 
-
+    @Query(nativeQuery = true,value = "SELECT * from account where phone_number = :phoneNumber")
+    Account findByPhoneNumber(String phoneNumber);
     Account findByUsername(String username);
 
     Account findAccountById(long id);
