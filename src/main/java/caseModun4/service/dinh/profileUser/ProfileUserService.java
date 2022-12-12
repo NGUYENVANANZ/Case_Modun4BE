@@ -21,6 +21,10 @@ public class ProfileUserService implements IProfileService {
         return iProfileUserRepo.profileUser(id);
     }
 
+    public List<Account> listLike(long id){
+        return  (List<Account>) iProfileUserRepo.listLike(id);
+    }
+
     @Override
     public Account getAll() {
         return null;
