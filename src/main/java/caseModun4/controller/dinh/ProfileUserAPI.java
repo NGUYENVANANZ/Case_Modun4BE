@@ -1,6 +1,7 @@
 package caseModun4.controller.dinh;
 
 import caseModun4.model.*;
+import caseModun4.repository.an.IFriend;
 import caseModun4.repository.an.INotification;
 import caseModun4.service.an.AnService;
 import caseModun4.service.dinh.profileUser.IProfileService;
@@ -30,6 +31,9 @@ public class ProfileUserAPI {
     @Autowired
     INotification iNotification;
 
+    @Autowired
+    IFriend iFriend;
+
     @GetMapping("/profile/{id}")
     public ResponseEntity<Account> profileUser(@PathVariable long id) {
         Account account = anService.account(id);
@@ -55,8 +59,10 @@ public class ProfileUserAPI {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
-        anService.addFriend(account, account1);
-        anService.addFriend(account1, account);
+        Friend friend = anService.addFriend(account, account1);
+        iFriend.save(friend);
+        Friend friend1 = anService.addFriend(account1, account);
+        iFriend.save(friend1);
         NotificationType notificationType = new NotificationType(3, "AddFriend");
         Notification notification = new Notification(account1, account, notificationType);
         iNotification.save(notification);
@@ -64,7 +70,7 @@ public class ProfileUserAPI {
     }
 
     @PostMapping("/newFriend/{idFriend}&{idNotification}")
-    public ResponseEntity newFriend(@PathVariable long idFriend,@PathVariable long idNotification) {
+    public ResponseEntity newFriend(@PathVariable long idFriend, @PathVariable long idNotification) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
@@ -87,19 +93,19 @@ public class ProfileUserAPI {
     }
 
     @PostMapping("/unFriends/{idFriend}")
-    public ResponseEntity<String> UnFriends(@PathVariable long idFriend) {
+    public ResponseEntity<List<Notification>> UnFriends(@PathVariable long idFriend) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
         anService.unFriend(account, account1);
         List<Notification> notification = iNotification.Notification(account1.getId(), account.getId());
-        for (Notification n:notification
-             ) {
-            if (n.getNotificationType().getId() == 3){
+        for (Notification n : notification
+        ) {
+            if (n.getNotificationType().getId() == 3) {
                 iNotification.delete(n);
             }
         }
-        return new ResponseEntity<>("ok" ,HttpStatus.OK);
+        return new ResponseEntity<>(notification, HttpStatus.OK);
     }
 
 
