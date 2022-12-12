@@ -2,8 +2,10 @@ package caseModun4.controller.manh;
 
 
 import caseModun4.model.Account;
+import caseModun4.model.LikePage;
 import caseModun4.model.Role;
 import caseModun4.repository.IAccountRepo;
+import caseModun4.repository.dinh.ILikePageRepo;
 import caseModun4.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class RegisterApi {
   IAccountRepo iAccountRepo;
 
   @Autowired
+  ILikePageRepo iLikePageRepo;
+
+  @Autowired
   AccountService accountService;
 
   @PostMapping("/register")
@@ -34,6 +39,8 @@ public class RegisterApi {
     role.setId(1);
     account.setRoles(role);
     iAccountRepo.save(account);
+    LikePage likePage = new LikePage(account);
+    iLikePageRepo.save(likePage);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
 

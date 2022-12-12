@@ -3,8 +3,10 @@ package caseModun4.controller.manh;
 import caseModun4.model.Account;
 import caseModun4.model.Page;
 import caseModun4.model.PageStatus;
+import caseModun4.model.dto.PageDTO;
 import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.an.IPage;
+import caseModun4.repository.an.IPageStatus;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
 import caseModun4.service.manh.IFriendService;
@@ -40,7 +42,11 @@ public class ProfileAPI {
   IFriendService iFriendService;
 
   @Autowired
+  IPageStatus iPageStatus;
+
+  @Autowired
   IPage iPage;
+
 
   @GetMapping("/profile")
   public  ResponseEntity<Account> findById() {
@@ -70,5 +76,31 @@ public class ProfileAPI {
     page1.setLikePages(null);
     iPage.save(page);
     return new ResponseEntity<>(page ,HttpStatus.OK);
+  }
+
+  @GetMapping("/deletepost/{id}")
+  public ResponseEntity<Page> delete (@PathVariable long id){
+    profileService.deletePageById(id);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @GetMapping("/geteditpost/{id}")
+  public ResponseEntity<Page> getPage(@PathVariable long id){
+    Page page =profileService.findPageById(id);
+    return new ResponseEntity<>(page,HttpStatus.OK);
+  }
+
+  @PostMapping("/edit/{id}&{idStatus}")
+  public ResponseEntity<Page> edit(@RequestBody PageDTO page2, @PathVariable long id, @PathVariable long idStatus){
+    Page page1 = profileService.findPageById(id);
+    PageStatus pageStatus = iPageStatus.findById(idStatus).get();
+
+    page1.setText(page2.getText());
+    page1.setImg(page2.getImg());
+    page1.setTime(LocalDateTime.now());
+    page1.setPageStatus(pageStatus);
+
+    iPage.save(page1);
+    return new ResponseEntity<>(page1,HttpStatus.OK);
   }
 }

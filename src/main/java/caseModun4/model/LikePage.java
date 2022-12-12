@@ -12,5 +12,10 @@ public class LikePage {
     @ManyToOne
     private Account accounts;
 
+    public LikePage() {
+    }
 
+    public LikePage(Account accounts) {
+        this.accounts = accounts;
+    }
 }
