@@ -91,8 +91,7 @@ public class ProfileUserAPI {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = anService.account(userDetails.getUsername());
         Account account1 = anService.account(idFriend);
-//        anService.unFriend(account, account1);
-//  Notification notification = anService.notificationAddFriend(account1.getId(), account.getId(), 3);
+        anService.unFriend(account, account1);
         List<Notification> notification = iNotification.Notification(account1.getId(), account.getId());
         for (Notification n:notification
              ) {
