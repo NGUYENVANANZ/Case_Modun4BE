@@ -21,12 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin("*")
 public class LikePageAPI {
-    @Autowired
-    JwtService jwtService;
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    ILikePageService iLikePageService;
+
+
     @Autowired
     AnService anService;
 
@@ -72,20 +68,4 @@ public class LikePageAPI {
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }
 
-
-//    @DeleteMapping("/page/{id_page}")
-//    public ResponseEntity<Page> delete (@PathVariable long id_page){
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Account account = anService.account(userDetails.getUsername());
-//
-//        LikePage likePage = likePageService.likePage(account.getId());
-//        Page page = likePageService.newLike(id_page);
-//for (int i = 0; i < page.getLikePages().size(); i++){
-//    if (likePage == page.getLikePages().get(i)){
-//        page.getLikePages().remove(i);
-//    }
-//}
-//iPage.save(page);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 }

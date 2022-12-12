@@ -8,6 +8,8 @@ import caseModun4.repository.dinh.ILikePageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LikePageService implements ILikePageService{
     @Autowired
@@ -32,5 +34,9 @@ public class LikePageService implements ILikePageService{
 
     public Page newLike(long id){
         return iPage.Page1(id);
+    }
+
+    public List<LikePage> listLikePage (long id_page){
+        return iPage.Page1(id_page).getLikePages();
     }
 }
