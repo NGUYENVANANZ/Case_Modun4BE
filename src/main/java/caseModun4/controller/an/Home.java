@@ -45,7 +45,6 @@ public class Home {
     public ResponseEntity<List<Page>> pageHome(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Page> pages = anService.homePage(userDetails.getUsername());
-
         return new ResponseEntity<>(pages,HttpStatus.OK);
     }
 
