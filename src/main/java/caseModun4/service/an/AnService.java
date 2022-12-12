@@ -119,11 +119,7 @@ public class AnService {
         Friend friend1 = iFriend.Friend(friend.getId(), account.getId());
         iFriend.delete(friend1);
     }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> dee2fdc62a73ac03298278cd7f10deb661798ba3
 }
 
 

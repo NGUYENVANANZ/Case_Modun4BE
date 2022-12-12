@@ -27,10 +27,11 @@ public class SearchAPI {
         return new ResponseEntity<>(iAccountServiceSearch.findByName(name), HttpStatus.OK);
     }
 
-//    @GetMapping("/#{text}")
-//    public ResponseEntity<List<Page>> findByText(@PathVariable String text) {
-//        return new ResponseEntity<>(iPageServiceSearch.findByText(text), HttpStatus.OK);
-//    }
+    @PostMapping("/{text}")
+    public ResponseEntity<List<Page>> findByText(@PathVariable String text) {
+        List<Page> pages = iPageServiceSearch.findByText(text);
+        return new ResponseEntity<>(pages, HttpStatus.OK);
+    }
 //    @GetMapping("")
 //    public ResponseEntity<List<Account>> getAll() {
 //        return new ResponseEntity<>(iAccountServiceSearch.getAll(), HttpStatus.OK);
