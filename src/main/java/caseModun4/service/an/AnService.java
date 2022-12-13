@@ -48,6 +48,20 @@ public class AnService {
         return accounts;
     }
 
+    public List<Account> friends(long id1, long id2) {
+        List<Friend> friends = iFriend.listFriend(id1);
+        List<Friend> friends1 = iFriend.listFriend(id2);
+        List<Account> accounts = new ArrayList<>();
+        for (int i = 0; i < friends.size(); i++) {
+            for (int j = 0; j < friends1.size(); j++) {
+                if (friends.get(i).getAccount1().getId() == friends1.get(j).getAccount1().getId()){
+                    accounts.add(iAccountRepo.findAccountById(friends.get(i).getAccount1().getId()));
+                }
+            }
+        }
+        return accounts;
+    }
+
 
     public List<Page> homePage(String username) {
         Account account = iAccountRepo.findByUsername(username);
