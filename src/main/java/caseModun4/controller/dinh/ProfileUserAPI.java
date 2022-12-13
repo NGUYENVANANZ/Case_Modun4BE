@@ -56,7 +56,7 @@ public class ProfileUserAPI {
             pages = iPage.Page4(account1.getId());
             return new ResponseEntity<>(pages, HttpStatus.OK);
         }
-        pages = profileUserService.pageList(account.getId());
+        pages = profileUserService.pageList(account1.getId());
         return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
