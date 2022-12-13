@@ -49,8 +49,8 @@ public class AnService {
     }
 
     public List<Account> friends(long id1, long id2) {
-        List<Friend> friends = iFriend.listFriend(id1);
-        List<Friend> friends1 = iFriend.listFriend(id2);
+        List<Friend> friends = iFriend.listFriend2(id1);
+        List<Friend> friends1 = iFriend.listFriend2(id2);
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {
             for (int j = 0; j < friends1.size(); j++) {
@@ -86,11 +86,11 @@ public class AnService {
     }
 
     public Notification notifications(long id1, long id2, long id3) {
-        List<Notification> notifications = iNotification.listNotification(id1);
+        List<Notification> notifications = iNotification.getNotificationBy(id1, id3);
 
         for (Notification n : notifications
         ) {
-            if (n.getAccount1().getId() == id2 && n.getPage().getId() == id3) {
+            if (n.getAccount1().getId() == id2) {
                 return n;
             }
         }
