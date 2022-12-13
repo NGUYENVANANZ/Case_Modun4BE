@@ -54,4 +54,14 @@ public class RegisterApi {
       return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping("/checkPhonenumber")
+  public ResponseEntity<Account> checkPhoneNumber(@RequestParam String phoneNumber) {
+    Account account = accountService.findbysdt(phoneNumber);
+    if (account==null){
+      return new ResponseEntity<>(account,HttpStatus.OK);
+    }else {
+      return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
+    }
+  }
 }
