@@ -13,6 +13,7 @@ import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.an.INotification;
 import caseModun4.repository.an.IPage;
 import caseModun4.repository.an.IPageStatus;
+import caseModun4.repository.linh.ISearchRepo;
 import caseModun4.repository.manh.IFriendRepo;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
@@ -41,18 +42,8 @@ public class ProfileAPI {
   @Autowired
   IFriendRepo iFriendRepo;
 
-  @Autowired
-  AuthenticationManager authenticationManager;
-
-  @Autowired
-  JwtService jwtService;
-
-  @Autowired
-  IAccountRepo iAccountRepo;
-
-
-  @Autowired
-  IFriendService iFriendService;
+ @Autowired
+  ISearchRepo iSearchRepo;
 
 
   @Autowired
@@ -137,5 +128,21 @@ public class ProfileAPI {
   }
 
 
+  @GetMapping("/searchfriends/{name}")
+  public ResponseEntity<List<Friend>> friendssearch(@PathVariable String name){
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Account account = profileService.findaccountsbyname(userDetails.getUsername());
+    List<Account> accountList = iSearchRepo.findByName(name);
+    List<Friend> listfriends = iFriendRepo.findAllById(account.getId());
+    List<Friend> friends1 = new ArrayList<>();
+    for (int i = 0; i < listfriends.size(); i++) {
+      for (int y=0 ; y<accountList.size();y++){
+        if (accountList.get(y).getId()==listfriends.get(i).getAccount1().getId() && listfriends.get(i).getFriendStatus().getId()==1){
+          friends1.add(listfriends.get(i));
+        }
+      }
+    }
+    return new ResponseEntity<>(friends1,HttpStatus.OK);
+  }
 
 }
