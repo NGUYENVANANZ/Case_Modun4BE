@@ -1,12 +1,14 @@
 package caseModun4.controller.manh;
 
 import caseModun4.model.Account;
+import caseModun4.model.Friend;
 import caseModun4.model.Page;
 import caseModun4.model.PageStatus;
 import caseModun4.model.dto.PageDTO;
 import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.an.IPage;
 import caseModun4.repository.an.IPageStatus;
+import caseModun4.repository.manh.IFriendRepo;
 import caseModun4.service.JwtService;
 import caseModun4.service.an.AnService;
 import caseModun4.service.manh.IFriendService;
@@ -21,25 +23,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping(path = "/profiles")
 public class ProfileAPI {
-  @Autowired
-  AuthenticationManager authenticationManager;
 
-  @Autowired
-  JwtService jwtService;
 
-  @Autowired
-  IAccountRepo iAccountRepo;
+
 
   @Autowired
   ProfileService profileService;
-  @Autowired
-  IFriendService iFriendService;
+@Autowired
+  IFriendRepo iFriendRepo;
 
   @Autowired
   IPageStatus iPageStatus;
@@ -102,5 +100,19 @@ public class ProfileAPI {
 
     iPage.save(page1);
     return new ResponseEntity<>(page1,HttpStatus.OK);
+  }
+
+  @GetMapping("/friendProfile")
+  public ResponseEntity<List<Friend>> friends() {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Account account = profileService.findaccountsbyname(userDetails.getUsername());
+    List<Friend> friends = iFriendRepo.findAllById(account.getId());
+    List<Friend> friends1 = new ArrayList<>();
+    for (int i = 0; i < friends.size(); i++) {
+      if (friends.get(i).getFriendStatus().getId()==1){
+        friends1.add(friends.get(i));
+      }
+    }
+    return new ResponseEntity<>(friends1, HttpStatus.OK);
   }
 }

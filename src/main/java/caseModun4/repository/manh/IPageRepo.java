@@ -14,8 +14,7 @@ public interface IPageRepo extends CrudRepository<Page,Long> {
     Page findPageById(long id);
 
 
-    @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id")
-    List<Friend> findAllById(long id);
+
 
 //    Page deletePageById(long id);
 }
