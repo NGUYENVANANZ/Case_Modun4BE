@@ -40,7 +40,7 @@ public class AnService {
 
     public List<Account> friends(String username) {
         Account account = iAccountRepo.findByUsername(username);
-        List<Friend> friends = iFriend.listFriend(account.getId());
+        List<Friend> friends = iFriend.listFriend2(account.getId());
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {
             accounts.add(iAccountRepo.findAccountById(friends.get(i).getAccount1().getId()));
