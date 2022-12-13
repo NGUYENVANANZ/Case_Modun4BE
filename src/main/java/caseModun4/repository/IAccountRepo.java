@@ -15,6 +15,9 @@ import java.util.List;
 public interface IAccountRepo extends CrudRepository<Account, Long> {
 
 
+    @Query(nativeQuery = true,value = "SELECT * from account where username = :username and phone_number= :phoneNumber")
+    Account findAccountByPhoneNumberAndUsername(@Param("username") String username, @Param("phoneNumber") String phoneNumber);
+
     @Query(nativeQuery = true,value = "SELECT img from account where username = :username")
     String accountImg(@Param("username") String username);
 
