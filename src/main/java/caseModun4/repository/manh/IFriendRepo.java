@@ -8,11 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface IFriendRepo extends PagingAndSortingRepository<Friend,Long> {
     @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id")
     List<Friend> findAllById(long id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM friend WHERE full_name LIKE concat('%',:name,'%')")
     List<Friend> searchByName(@Param("name") String name);
+
 
 }
