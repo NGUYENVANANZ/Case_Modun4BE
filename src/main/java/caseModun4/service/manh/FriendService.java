@@ -14,7 +14,7 @@ public class FriendService implements IFriendService{
     @Autowired
     IFriendRepo iFriendRepo;
     @Override
-    public void save(Friend friend) {
+    public void save() {
 
     }
 
