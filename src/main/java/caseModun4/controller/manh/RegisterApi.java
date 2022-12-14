@@ -4,6 +4,7 @@ package caseModun4.controller.manh;
 import caseModun4.model.Account;
 import caseModun4.model.LikePage;
 import caseModun4.model.Role;
+import caseModun4.model.dto.ResetPassDTO;
 import caseModun4.repository.IAccountRepo;
 import caseModun4.repository.dinh.ILikePageRepo;
 import caseModun4.service.AccountService;
@@ -54,4 +55,37 @@ public class RegisterApi {
       return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping("/checkPhonenumber")
+  public ResponseEntity<Account> checkPhoneNumber(@RequestParam String phoneNumber) {
+    Account account = accountService.findbysdt(phoneNumber);
+    if (account==null){
+      return new ResponseEntity<>(account,HttpStatus.OK);
+    }else {
+      return new ResponseEntity<>(account, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PostMapping("/resetpassword/{username}&{phoneNumber}")
+  public  ResponseEntity<Account> resetPass(@RequestBody ResetPassDTO resetPassDTO, @PathVariable String username , @PathVariable String phoneNumber) {
+    Account account1 = iAccountRepo.findAccountByPhoneNumberAndUsername(username, phoneNumber);
+    if (account1 != null) {
+      account1.setPassword(resetPassDTO.getPassword());
+      iAccountRepo.save(account1);
+      return new ResponseEntity<>(account1, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping("/check/{username}&{phoneNumber}")
+  public  ResponseEntity<Account> check( @PathVariable String username , @PathVariable String phoneNumber){
+    Account account1 = iAccountRepo.findAccountByPhoneNumberAndUsername(username, phoneNumber);
+    if (account1 != null) {
+      return new ResponseEntity<>(account1, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }

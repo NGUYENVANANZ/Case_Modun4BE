@@ -19,4 +19,13 @@ public class Cmt {
 
     @ManyToMany
     private List<LikeCmt> likeCmts;
+
+    public Cmt() {
+    }
+
+    public Cmt(String text, Account accounts, List<LikeCmt> likeCmts) {
+        this.text = text;
+        this.accounts = accounts;
+        this.likeCmts = likeCmts;
+    }
 }

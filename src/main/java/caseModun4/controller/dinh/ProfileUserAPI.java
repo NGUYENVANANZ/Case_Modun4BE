@@ -3,6 +3,7 @@ package caseModun4.controller.dinh;
 import caseModun4.model.*;
 import caseModun4.repository.an.IFriend;
 import caseModun4.repository.an.INotification;
+import caseModun4.repository.an.IPage;
 import caseModun4.service.an.AnService;
 import caseModun4.service.dinh.profileUser.IProfileService;
 import caseModun4.service.dinh.profileUser.ProfileUserService;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +36,9 @@ public class ProfileUserAPI {
     @Autowired
     IFriend iFriend;
 
+    @Autowired
+    IPage iPage;
+
     @GetMapping("/profile/{id}")
     public ResponseEntity<Account> profileUser(@PathVariable long id) {
         Account account = anService.account(id);
@@ -42,15 +47,25 @@ public class ProfileUserAPI {
 
     @GetMapping("/page/{id}")
     public ResponseEntity<List<Page>> postUser(@PathVariable long id) {
-        Account account = anService.account(id);
-        List<Page> pages = profileUserService.pageList(account.getId());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = anService.account(userDetails.getUsername());
+        Account account1 = anService.account(id);
+        Friend friend = iFriend.Friend(account.getId(), account1.getId());
+        List<Page> pages;
+        if (friend != null){
+            pages = iPage.Page4(account1.getId());
+            return new ResponseEntity<>(pages, HttpStatus.OK);
+        }
+        pages = profileUserService.pageList(account1.getId());
         return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
     @GetMapping("/friends/{id}")
     public ResponseEntity<List<Account>> friendUser(@PathVariable long id) {
-        Account account = anService.account(id);
-        List<Account> accounts = anService.friends(account.getUsername());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = anService.account(userDetails.getUsername());
+        Account account1 = anService.account(id);
+        List<Account> accounts = anService.friends(account.getId(), account1.getId());
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 

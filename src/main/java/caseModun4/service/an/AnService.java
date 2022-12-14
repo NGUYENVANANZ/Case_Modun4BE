@@ -40,10 +40,24 @@ public class AnService {
 
     public List<Account> friends(String username) {
         Account account = iAccountRepo.findByUsername(username);
-        List<Friend> friends = iFriend.listFriend(account.getId());
+        List<Friend> friends = iFriend.listFriend2(account.getId());
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {
             accounts.add(iAccountRepo.findAccountById(friends.get(i).getAccount1().getId()));
+        }
+        return accounts;
+    }
+
+    public List<Account> friends(long id1, long id2) {
+        List<Friend> friends = iFriend.listFriend2(id1);
+        List<Friend> friends1 = iFriend.listFriend2(id2);
+        List<Account> accounts = new ArrayList<>();
+        for (int i = 0; i < friends.size(); i++) {
+            for (int j = 0; j < friends1.size(); j++) {
+                if (friends.get(i).getAccount1().getId() == friends1.get(j).getAccount1().getId()){
+                    accounts.add(iAccountRepo.findAccountById(friends.get(i).getAccount1().getId()));
+                }
+            }
         }
         return accounts;
     }
@@ -72,11 +86,11 @@ public class AnService {
     }
 
     public Notification notifications(long id1, long id2, long id3) {
-        List<Notification> notifications = iNotification.listNotification(id1);
+        List<Notification> notifications = iNotification.getNotificationBy(id1, id3);
 
         for (Notification n : notifications
         ) {
-            if (n.getAccount1().getId() == id2 && n.getPage().getId() == id3) {
+            if (n.getAccount1().getId() == id2) {
                 return n;
             }
         }

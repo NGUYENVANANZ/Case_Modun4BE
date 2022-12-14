@@ -30,7 +30,6 @@ public class AccountService implements UserDetailsService {
         return null;
     }
 
-
     public List<Account> getAll() {
         return (List<Account>) iAccountRepo.findAll();
     }
@@ -38,5 +37,9 @@ public class AccountService implements UserDetailsService {
     public Account findByName(String name) {
         return iAccountRepo.findByUsername(name);
     }
+    public Account findbysdt(String phoneNumber) {
+        return iAccountRepo.findByPhoneNumber(phoneNumber);
+    }
+
 
 }

@@ -17,4 +17,7 @@ public interface IFriend extends CrudRepository<Friend, Long> {
     @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id and account1_id = :id1")
     Friend Friend(@Param("id") long id, @Param("id1") long id1);
 
+    @Query(nativeQuery = true,value = "SELECT * from friend where account_id = :id and friend_status_id = 1")
+    List<Friend> listFriend2(@Param("id") long id);
+
 }
