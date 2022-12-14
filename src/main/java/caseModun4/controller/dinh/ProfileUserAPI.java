@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -54,9 +56,13 @@ public class ProfileUserAPI {
         List<Page> pages;
         if (friend != null){
             pages = iPage.Page4(account1.getId());
+            pages.sort(Comparator.comparing(Page::getTime));
+            Collections.reverse(pages);
             return new ResponseEntity<>(pages, HttpStatus.OK);
         }
         pages = profileUserService.pageList(account1.getId());
+        pages.sort(Comparator.comparing(Page::getTime));
+        Collections.reverse(pages);
         return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
