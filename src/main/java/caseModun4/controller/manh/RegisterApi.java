@@ -39,6 +39,7 @@ public class RegisterApi {
     role.setName("ROLE_USER");
     role.setId(1);
     account.setRoles(role);
+    account.setStatus(true);
     iAccountRepo.save(account);
     LikePage likePage = new LikePage(account);
     iLikePageRepo.save(likePage);
