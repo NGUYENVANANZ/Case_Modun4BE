@@ -146,4 +146,20 @@ public class ProfileAPI {
     return new ResponseEntity<>(friends1,HttpStatus.OK);
   }
 
+    @PostMapping("/share/{id}")
+    public ResponseEntity<Page> friendssearch(@PathVariable long id){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = profileService.findaccountsbyname(userDetails.getUsername());
+        Page page = iPage.Page1(id);
+        Page page1 = new Page();
+        page1.setTime(LocalDateTime.now());
+        page1.setCmts(null);
+        page1.setText(page.getText());
+        page1.setImg(page.getImg());
+        page1.setLikePages(null);
+        page1.setAccount(account);
+        page1.setPageStatus(page.getPageStatus());
+        iPage.save(page1);
+        return new ResponseEntity<>(page1,HttpStatus.OK);
+    }
 }
