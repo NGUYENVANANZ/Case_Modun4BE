@@ -114,6 +114,7 @@ public class ProfileAPI {
   }
 
   @GetMapping("/friendProfile")
+
   public ResponseEntity<List<Friend>> friends() {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Account account = profileService.findaccountsbyname(userDetails.getUsername());
